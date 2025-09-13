@@ -97,6 +97,17 @@ public class TrainerService {
     }
 
 
+    public List<Trainer> getActiveTrainers() {
+        return List.of();
+    }
+
+    public Trainer getActiveTrainerById() {
+        return null;
+    }
+
+    public void update(Long id, double newTrainer) {
+        
+    }
 }
 
 
