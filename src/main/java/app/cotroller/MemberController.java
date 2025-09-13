@@ -54,4 +54,27 @@ public class MemberController {
     }
 
 
+    public String getMemberNumber() {
+        return " ";
+    }
+
+    public String getMembersCartTotalCost(Long id) {
+        return null;
+    }
+
+    public String getMemberCartAveragePrice(Long id) {
+        return " ";
+    }
+
+    public void addTrainerToMembersCart(Long customerId, Long productId) {
+    }
+
+    public void removerTrainerFromMembersCart(Object memberId, Long trainerId) {
+    }
+
+    public void clearMembersCart(Long id) {
+    }
+
+    public void removerTrainerFromMembersCart() {
+    }
 }

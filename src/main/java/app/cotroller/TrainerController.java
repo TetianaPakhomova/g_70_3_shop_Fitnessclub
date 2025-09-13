@@ -53,6 +53,7 @@ public class TrainerController {
     }
 
     public String getTrainersAveragePrice() {
+
         return null;
     }
 }
