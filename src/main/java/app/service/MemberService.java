@@ -12,7 +12,7 @@ public class MemberService {
     private final MemberRepository repository = new MemberRepository();
     private static MemberService instance;
 
-    MemberService() {
+    public MemberService() {
 
     }
 
@@ -94,6 +94,9 @@ public class MemberService {
     }
 
 
+    public void update(Long id, String newName) {
+        
+    }
 }
 
 

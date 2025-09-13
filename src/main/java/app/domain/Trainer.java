@@ -6,11 +6,16 @@ public class Trainer {
     private Long id;
     private String name;
 
+    public Trainer(String title, double price) {
+    }
+
     public void setId(Long id) {
+
         this.id = id;
     }
 
     public void setName(String name) {
+
         this.name = name;
     }
 
@@ -31,5 +36,16 @@ public class Trainer {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    public String getName() {
+        return " ";
+    }
+
+    public void setActive(boolean b) {
+    }
+
+    public boolean isActive() {
+        return false;
     }
 }
