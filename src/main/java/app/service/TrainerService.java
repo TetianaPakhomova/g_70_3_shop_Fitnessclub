@@ -36,7 +36,6 @@ public class TrainerService {
             throw new TrainerSaveExseption("Имя не должно быть пустым");
         }
         trainer.setActive(true);
-        ;
         return repository.save(trainer);
 
     }

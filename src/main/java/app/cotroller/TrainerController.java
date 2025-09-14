@@ -11,7 +11,7 @@ public class TrainerController {
 
     //Сохранить тренера в базе данных и автоматически он являеться активным
     public Trainer save(Long id, String name) {
-        Trainer trainer = new Trainer(name, id);
+        Trainer trainer = new Trainer(id, name);
         return service.save(trainer);
 
     }

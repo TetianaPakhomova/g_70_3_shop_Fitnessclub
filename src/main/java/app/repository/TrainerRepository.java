@@ -28,8 +28,10 @@ public class TrainerRepository {
     }
 
     public Object findById(Long id) {
+        return null;
     }
 
     public Trainer findByName(String name) {
+        return null;
     }
 }
