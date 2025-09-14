@@ -6,7 +6,7 @@ public class Trainer {
     private Long id;
     private String name;
 
-    public Trainer(String title, double price) {
+    public Trainer(Long id, String name) {
     }
 
     public void setId(Long id) {

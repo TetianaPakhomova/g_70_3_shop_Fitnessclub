@@ -27,4 +27,9 @@ public class TrainerRepository {
 
     }
 
+    public Object findById(Long id) {
+    }
+
+    public Trainer findByName(String name) {
+    }
 }

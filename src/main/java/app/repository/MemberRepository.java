@@ -29,11 +29,18 @@ public class MemberRepository {
     public Member findById(Long id) {
         return database.get(id);
 
+
     }
     public void deleteById (Long id) {
         database.remove(id);
 
     }
+
+    public Member findByName(String name) {
+        return database.get(name);
+    }
+
+
 
 
 }
