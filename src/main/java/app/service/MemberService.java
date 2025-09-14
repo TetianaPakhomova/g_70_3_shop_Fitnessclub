@@ -9,93 +9,60 @@ import app.repository.MemberRepository;
 import java.util.List;
 
 public class MemberService {
+
     private final MemberRepository repository = new MemberRepository();
     private static MemberService instance;
 
-    public MemberService() {
-
-    }
-
     public static MemberService getInstance() {
-        if (instance == null) {
-            instance = new MemberService();
-
-        }
+        if (instance == null) instance = new MemberService();
         return instance;
     }
 
     public Member save(Member member) {
-        if (member == null) {
-            throw new MemberSaveExseption("Пользователь не может быть пустым");
-
+        if (member == null || member.getName() == null || member.getName().isBlank()) {
+            throw new MemberSaveExseption("Имя участника не может быть пустым");
         }
-        String name = member.getName();
-        if (name == null || name.trim().isEmpty()) {
-            throw new MemberSaveExseption("Имя не должно быть пустым");
-        }
-        member.setActive(true);
         return repository.save(member);
+    }
+
+    public Member save(String name) {
+        return save(new Member(name));
+    }
+
+    public Member getById(Long id) {
+        return repository.findById(id);
 
     }
 
-    public List<Member> getAllActiveMember() {
-        return repository.findAll()
-                .stream()
-                .filter(Member::isActive)
-                .toList();
+    public List<Member> getAll() {
+        return repository.findAll();
+    }
 
+    public void delete(Long id) {
+        repository.deleteById(id);
+    }
+
+    public Member getByName(String name) {
+        return repository.findByName(name);
 
     }
 
-    public Member getActiveMemberById(Long id) {
-        Member member = repository.findById(id);
-
-        if (member == null || !member.isActive()) {
-            throw new MemberNotFoundExseption(id);
-
-        }
-        return member;
+    public Member update(Long id, String newName) {
+        Member m = getById(id);
+        m.setName(newName);
+        return repository.save(m);
     }
 
-    public void deleteById(Long id) {
-        Member member = getActiveMemberById(id);
-        member.setActive(false);
+    public Member deactivate(Long id) {
+        Member m = getById(id);
+        m.setActive(false);
+        return repository.save(m);
     }
 
-    public void deleteByName(String name) {
-        getAllActiveMember()
-                .stream()
-                .filter(x -> x.getName().equals(name))
-                .forEach(x -> x.setActive(false));
-
-    }
-
-    public void restoreById(Long id) {
-
-        Member member = repository.findById(id);
-
-        if (member == null) {
-            throw new MemberNotFoundExseption(id);
-
-        }
-        member.setActive((true));
-    }
-
-
-    public void restoreByName(String name) throws MemberRestorsExseption {
-        Member member = null;
-        if (member == null || name.trim().isEmpty()) {
-            throw new MemberRestoreExseption(" ");
-
-
-        }
-        Member member1 = repository.findByName(name);
-        member.setActive(true);
-    }
-
-
-    public void update(Long id, String newName) {
-        
+    public Member activate(Long id) {
+        Member m = getById(id);
+        m.setActive(true);
+        return repository.save(m);
     }
 }
 

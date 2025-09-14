@@ -2,45 +2,39 @@ package app.repository;
 
 import app.domain.Member;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class MemberRepository {
+
     private final Map<Long, Member> database = new HashMap<>();
-    private long maxId;
-
-
-    public Map<Long, Member> getDatabase() {
-        return database;
-    }
+    private long maxId = 0;
 
     public Member save(Member member) {
-        member.setId(++maxId);
-        database.put(maxId, member);
+        if (member.getId() == null) member.setId(++maxId);
+        database.put(member.getId(), member);
         return member;
+    }
+
+    public Optional<Member> findById(Long id) {
+        return Optional.ofNullable(database.get(id));
     }
 
     public List<Member> findAll() {
         return new ArrayList<>(database.values());
-
     }
-    public Member findById(Long id) {
-        return database.get(id);
 
-
-    }
-    public void deleteById (Long id) {
+    public void deleteById(Long id) {
         database.remove(id);
-
     }
 
-    public Member findByName(String name) {
-        return database.get(name);
+    public Optional<Member> findByName(String name) {
+        return database.values().stream()
+                .filter(m -> Objects.equals(m.getName(), name))
+                .findFirst();
     }
-
-
-
-
 }
+
+
+
+
+

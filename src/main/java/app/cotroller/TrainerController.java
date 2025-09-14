@@ -9,53 +9,40 @@ public class TrainerController {
 
     private final TrainerService service = TrainerService.getInstance();
 
-    //Сохранить тренера в базе данных и автоматически он являеться активным
+    public Trainer save(String name) {
+        return service.save(name);
+    }
+
     public Trainer save(Long id, String name) {
-        Trainer trainer = new Trainer(id, name);
-        return service.save(trainer);
-
+        return service.save(new Trainer(id, name));
     }
 
-    // Возвращаем всех тренеров из базы данных
-    public List<Trainer> getAll() {
-        return service.getActiveTrainers();
-
-    }
-
-    // Вернуть одного тренера по его идентификатору
     public Trainer getById(Long id) {
-        return service.getActiveTrainerById();
-
+        return service.getById(id);
     }
 
-    //Изменить одного тренера по его идентификатору
-    public void update(Long id, double newTrainer) {
-        service.update(id, newTrainer);
-
+    public List<Trainer> getAll() {
+        return service.getAll();
     }
 
-    public void deleteById(Long id) {
+    public void delete(Long id) {
+        service.delete(id);
     }
 
-    public void deleteByTitle(String name) {
+    public Trainer update(Long id, String newName) {
+        return service.update(id, newName);
     }
 
-    public void restoreById(Long id) {
+    public Trainer deactivate(Long id) {
+        return service.deactivate(id);
     }
 
-    public String getTrainersName() {
-
-        return " ";
-    }
-
-    public String getTrainersTotalCost() {
-        return " ";
-    }
-
-    public String getTrainersAveragePrice() {
-
-        return null;
+    public Trainer activate(Long id) {
+        return service.activate(id);
     }
 }
+
+
+
 
 

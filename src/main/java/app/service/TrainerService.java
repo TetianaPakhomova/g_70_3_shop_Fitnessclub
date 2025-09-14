@@ -1,7 +1,6 @@
 package app.service;
 
 
-
 import app.domain.Trainer;
 import app.exseption.TrainerNotFoundExseption;
 import app.exseption.TrainerSaveExseption;
@@ -11,101 +10,67 @@ import java.util.List;
 
 public class TrainerService {
 
-    private final TrainerRepository repository = new TrainerRepository();
+    final TrainerRepository repository = new TrainerRepository();
     private static TrainerService instance;
 
-    private TrainerService() {
-
-    }
-
     public static TrainerService getInstance() {
-        if (instance == null) {
-            instance = new TrainerService();
-
-        }
+        if (instance == null) instance = new TrainerService();
         return instance;
     }
 
     public Trainer save(Trainer trainer) {
-        if (trainer == null) {
-            throw new TrainerSaveExseption("Пользователь не может быть пустым");
-
+        if (trainer == null || trainer.getName() == null || trainer.getName().isBlank()) {
+            throw new TrainerSaveExseption("Имя тренера не может быть пустым");
         }
-        String name = trainer.getName();
-        if (name == null || name.trim().isEmpty()) {
-            throw new TrainerSaveExseption("Имя не должно быть пустым");
-        }
-        trainer.setActive(true);
         return repository.save(trainer);
+    }
+
+    public Trainer save(String name) {
+        return save(new Trainer(id, name));
+    }
+
+    public Trainer getById(Long id) {
+        return (Trainer) repository.findById(id);
+    }
+
+    public List<Trainer> getAll() {
+        return repository.findAll();
+    }
+
+    public void delete(Long id) {
+        repository.deleteById(id);
+    }
+
+    public Trainer getByName(String name) {
+        return repository.findByName(name);
+
 
     }
 
-    public List<Trainer> getAllActiveMember() {
-        return repository.findAll()
-                .stream()
-                .filter(Trainer::isActive)
-                .toList();
-
-
+    public Trainer update(Long id, String newName) {
+        Trainer t = getById(id);
+        t.setName(newName);
+        return repository.save(t);
     }
 
-    public Trainer getActiveMemberById(Long id) {
-        Trainer trainer= (Trainer) repository.findById(id);
+    public Trainer deactivate(Long id) {
+        Trainer t = getById(id);
+        t.setActive(false);
+        return repository.save(t);
+    }
 
-        if (trainer == null || !trainer.isActive()) {
-            throw new TrainerNotFoundExseption(id);
+    public Trainer activate(Long id) {
+        Trainer t = getById(id);
+        t.setActive(true);
+        return repository.save(t);
+    }
 
+    public Trainer getActiveTrainerById(Long id) {
+        Trainer t = getById(id);
+        if (!t.isActive()) {
+            throw new TrainerNotFoundExseption("Trainer id=" + id + " не активен");
         }
-        return trainer;
-    }
-
-    public void deleteById(Long id) {
-        Trainer trainer = getActiveMemberById(id);
-        trainer.setActive(false);
-    }
-
-    public void deleteByName(String name) {
-        getAllActiveMember()
-                .stream()
-                .filter(x -> x.getName().equals(name))
-                .forEach(x -> x.setActive(false));
-
-    }
-
-    public void restoreById(Long id) {
-
-        Trainer trainer = (Trainer) repository.findById(id);
-
-        if (trainer == null) {
-            throw new TrainerNotFoundExseption(id);
-
-        }
-        trainer.setActive((true));
-    }
-
-
-    public void restoreByName(String name) throws MemberRestorsExseption, TrainerRestoreExseption {
-        Trainer trainer = null;
-        if (trainer == null || name.trim().isEmpty()) {
-            throw new TrainerRestoreExseption("Имя не может быть пустым");
-
-
-        }
-        Trainer trainer1 = repository.findByName(name);
-        trainer1.setActive(true);
-    }
-
-
-    public List<Trainer> getActiveTrainers() {
-        return List.of();
-    }
-
-    public Trainer getActiveTrainerById() {
-        return null;
-    }
-
-    public void update(Long id, double newTrainer) {
-        
+        return t;
     }
 }
 
