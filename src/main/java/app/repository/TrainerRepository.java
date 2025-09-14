@@ -6,12 +6,13 @@ import java.util.*;
 
 public class TrainerRepository {
 
-    private final Map<Long, Trainer> database = new HashMap<>();
+    private final Map<Trainer, Trainer> database = new HashMap<Trainer, Trainer>();
     private long maxId = 0;
 
-    public Trainer save(Trainer trainer) {
-        if (trainer.getId() == null) trainer.setId(++maxId);
-        database.put(trainer.getId(), trainer);
+    public Optional<Trainer> save(Optional<Trainer> trainer) {
+        if (trainer.get() == null) trainer.get();
+        Trainer t = null;
+        database.put(trainer.get(), t);
         return trainer;
     }
 

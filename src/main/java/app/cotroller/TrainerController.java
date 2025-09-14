@@ -4,20 +4,21 @@ import app.domain.Trainer;
 import app.service.TrainerService;
 
 import java.util.List;
+import java.util.Optional;
 
 public class TrainerController {
 
     private final TrainerService service = TrainerService.getInstance();
 
-    public Trainer save(String name) {
+    public Optional<Trainer> save(String name) {
         return service.save(name);
     }
 
-    public Trainer save(Long id, String name) {
+    public Optional<Trainer> save(Long id, String name) {
         return service.save(new Trainer(id, name));
     }
 
-    public Trainer getById(Long id) {
+    public Optional<Trainer> getById(Long id) {
         return service.getById(id);
     }
 
@@ -29,15 +30,15 @@ public class TrainerController {
         service.delete(id);
     }
 
-    public Trainer update(Long id, String newName) {
+    public Optional<Trainer> update(Long id, String newName) {
         return service.update(id, newName);
     }
 
-    public Trainer deactivate(Long id) {
+    public Optional<Trainer> deactivate(Long id) {
         return service.deactivate(id);
     }
 
-    public Trainer activate(Long id) {
+    public Optional<Trainer> activate(Long id) {
         return service.activate(id);
     }
 }

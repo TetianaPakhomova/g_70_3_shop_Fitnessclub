@@ -7,6 +7,7 @@ import app.domain.Trainer;
 
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class Visitors {
@@ -37,7 +38,7 @@ public class Visitors {
                     case "1": {
                         System.out.print("Имя нового участника: ");
                         String name = sc.nextLine();
-                        Member m = memberController.save(name);
+                        Optional<Member> m = memberController.save(name);
                         System.out.println("Создан: " + m);
                         break;
                     }
@@ -52,7 +53,7 @@ public class Visitors {
                         Long id = Long.parseLong(sc.nextLine());
                         System.out.print("Новое имя: ");
                         String newName = sc.nextLine();
-                        Member m = memberController.update(id, newName);
+                        Optional<Member> m = memberController.update(id, newName);
                         System.out.println("Обновлён: " + m);
                         break;
                     }
@@ -66,7 +67,7 @@ public class Visitors {
                     case "5": {
                         System.out.print("Имя нового тренера: ");
                         String name = sc.nextLine();
-                        Trainer t = trainerController.save(name);
+                        Optional<Trainer> t = trainerController.save(name);
                         System.out.println("Создан: " + t);
                         break;
                     }
@@ -81,7 +82,7 @@ public class Visitors {
                         Long id = Long.parseLong(sc.nextLine());
                         System.out.print("Новое имя: ");
                         String newName = sc.nextLine();
-                        Trainer t = trainerController.update(id, newName);
+                        Optional<Trainer> t = trainerController.update(id, newName);
                         System.out.println("Обновлён: " + t);
                         break;
                     }

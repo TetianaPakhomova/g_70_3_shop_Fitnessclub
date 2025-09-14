@@ -6,12 +6,13 @@ import java.util.*;
 
 public class MemberRepository {
 
-    private final Map<Long, Member> database = new HashMap<>();
+    private final Map<Member, Member> database = new HashMap<Member, Member>();
     private long maxId = 0;
 
-    public Member save(Member member) {
-        if (member.getId() == null) member.setId(++maxId);
-        database.put(member.getId(), member);
+    public Optional<Member> save(Optional<Member> member) {
+        if (member.get() == null) member.get();
+        Member Member = null;
+        database.put(member.get(), Member);
         return member;
     }
 

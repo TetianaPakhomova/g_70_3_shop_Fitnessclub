@@ -7,6 +7,7 @@ import app.exseption.TrainerSaveExseption;
 import app.repository.TrainerRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public class TrainerService {
 
@@ -18,19 +19,20 @@ public class TrainerService {
         return instance;
     }
 
-    public Trainer save(Trainer trainer) {
+    public Optional<Trainer> save(Trainer trainer) {
         if (trainer == null || trainer.getName() == null || trainer.getName().isBlank()) {
             throw new TrainerSaveExseption("Имя тренера не может быть пустым");
         }
-        return repository.save(trainer);
+        return repository.save(Optional.of(trainer));
     }
 
-    public Trainer save(String name) {
+    public Optional<Trainer> save(String name) {
+        Long id = 0L;
         return save(new Trainer(id, name));
     }
 
-    public Trainer getById(Long id) {
-        return (Trainer) repository.findById(id);
+    public Optional<Trainer> getById(Long id) {
+        return repository.findById(id);
     }
 
     public List<Trainer> getAll() {
@@ -41,35 +43,35 @@ public class TrainerService {
         repository.deleteById(id);
     }
 
-    public Trainer getByName(String name) {
+    public Optional<Trainer> getByName(String name) {
         return repository.findByName(name);
 
 
     }
 
-    public Trainer update(Long id, String newName) {
-        Trainer t = getById(id);
-        t.setName(newName);
+    public Optional<Trainer> update(Long id, String newName) {
+        Optional<Trainer> t = getById(id);
+        t.stream();
         return repository.save(t);
     }
 
-    public Trainer deactivate(Long id) {
-        Trainer t = getById(id);
-        t.setActive(false);
+    public Optional<Trainer> deactivate(Long id) {
+        Optional<Trainer> t = getById(id);
+        t.getClass();
         return repository.save(t);
     }
 
-    public Trainer activate(Long id) {
-        Trainer t = getById(id);
-        t.setActive(true);
+    public Optional<Trainer> activate(Long id) {
+        Optional<Trainer> t = getById(id);
+        t.getClass();
         return repository.save(t);
     }
 
-    public Trainer getActiveTrainerById(Long id) {
-        Trainer t = getById(id);
-        if (!t.isActive()) {
-            throw new TrainerNotFoundExseption("Trainer id=" + id + " не активен");
+    public Optional<Trainer> getActiveTrainerById(boolean id) {
+        if (Boolean.parseBoolean(getActiveTrainerById(id).toString())) {
+            throw new TrainerNotFoundExseption("Trainer id не активен");
         }
+        Optional<Trainer> t = Optional.empty();
         return t;
     }
 }

@@ -4,16 +4,17 @@ import app.domain.Member;
 import app.service.MemberService;
 
 import java.util.List;
+import java.util.Optional;
 
 public class MemberController {
 
     private final MemberService service = MemberService.getInstance();
 
-    public Member save(String name) {
+    public Optional<Member> save(String name) {
         return service.save(name);
     }
 
-    public Member getById(Long id) {
+    public Optional<Member> getById(Long id) {
         return service.getById(id);
     }
 
@@ -25,16 +26,17 @@ public class MemberController {
         service.delete(id);
     }
 
-    public Member update(Long id, String newName) {
+    public Optional<Member> update(Long id, String newName) {
         return service.update(id, newName);
     }
 
-    public Member deactivate(Long id) {
+    public Optional<Member> deactivate(Long id) {
         return service.deactivate(id);
     }
 
-    public Member activate(Long id) {
+    public Optional<Member> activate(Long id) {
         return service.activate(id);
     }
 }
+
 

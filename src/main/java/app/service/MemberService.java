@@ -7,6 +7,7 @@ import app.exseption.MemberSaveExseption;
 import app.repository.MemberRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public class MemberService {
 
@@ -18,18 +19,18 @@ public class MemberService {
         return instance;
     }
 
-    public Member save(Member member) {
+    public Optional<Member> save(Member member) {
         if (member == null || member.getName() == null || member.getName().isBlank()) {
             throw new MemberSaveExseption("Имя участника не может быть пустым");
         }
-        return repository.save(member);
+        return repository.save(Optional.of(member));
     }
 
-    public Member save(String name) {
+    public Optional<Member> save(String name) {
         return save(new Member(name));
     }
 
-    public Member getById(Long id) {
+    public Optional<Member> getById(Long id) {
         return repository.findById(id);
 
     }
@@ -42,29 +43,30 @@ public class MemberService {
         repository.deleteById(id);
     }
 
-    public Member getByName(String name) {
+    public Optional<Member> getByName(String name) {
         return repository.findByName(name);
 
     }
 
-    public Member update(Long id, String newName) {
-        Member m = getById(id);
-        m.setName(newName);
+    public Optional<Member> update(Long id, String newName) {
+        Optional<Member> m = getById(id);
+        m.stream();
         return repository.save(m);
     }
 
-    public Member deactivate(Long id) {
-        Member m = getById(id);
-        m.setActive(false);
+    public Optional<Member> deactivate(Long id) {
+        Optional<Member> m = getById(id);
+        m.getClass();
         return repository.save(m);
     }
 
-    public Member activate(Long id) {
-        Member m = getById(id);
-        m.setActive(true);
+    public Optional<Member> activate(Long id) {
+        Optional<Member> m = getById(id);
+        m.getClass();
         return repository.save(m);
     }
 }
+
 
 
 
