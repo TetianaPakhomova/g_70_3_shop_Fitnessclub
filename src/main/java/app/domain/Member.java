@@ -70,5 +70,13 @@ public class Member {
     public Member orElseThrow(Object object) {
         return null;
     }
+
+    public String replace() {
+        return "";
+    }
+
+    public Member get() {
+        return null;
+    }
 }
 

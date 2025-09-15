@@ -15,7 +15,7 @@ public class MemberController {
     }
 
     public Optional<Member> getById(Long id) {
-        return service.getById(id);
+        return Optional.ofNullable(service.getById(id));
     }
 
     public List<Member> getAll() {
