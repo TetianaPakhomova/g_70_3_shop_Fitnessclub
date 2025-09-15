@@ -26,12 +26,11 @@ public class MemberService {
         return repository.save(Optional.of(member));
     }
 
-    public Optional<Member> save(String name) {
-        return save(new Member(name));
-    }
 
-    public Optional<Member> getById(Long id) {
-        return repository.findById(id);
+
+    public Member getById(Long id) {
+        return repository.findById(id).orElseThrow(() -> new MemberNotFoundExseption(id));
+
 
     }
 
@@ -49,19 +48,19 @@ public class MemberService {
     }
 
     public Optional<Member> update(Long id, String newName) {
-        Optional<Member> m = getById(id);
+        Optional<Member> m = Optional.ofNullable(getById(id));
         m.stream();
         return repository.save(m);
     }
 
     public Optional<Member> deactivate(Long id) {
-        Optional<Member> m = getById(id);
+        Optional<Member> m = Optional.ofNullable(getById(id));
         m.getClass();
         return repository.save(m);
     }
 
     public Optional<Member> activate(Long id) {
-        Optional<Member> m = getById(id);
+        Optional<Member> m = Optional.ofNullable(getById(id));
         m.getClass();
         return repository.save(m);
     }
