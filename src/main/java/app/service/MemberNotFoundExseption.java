@@ -1,6 +1,7 @@
 package app.service;
 
 public class MemberNotFoundExseption {
-    public MemberNotFoundExseption(String string) {
+    public MemberNotFoundExseption(Long id) {
+        super();
     }
 }
