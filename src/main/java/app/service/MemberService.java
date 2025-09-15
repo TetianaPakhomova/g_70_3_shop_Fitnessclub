@@ -2,7 +2,6 @@ package app.service;
 
 import app.domain.Member;
 import app.exseption.MemberNotFoundExseption;
-import app.exseption.MemberRestoreExseption;
 import app.exseption.MemberSaveExseption;
 import app.repository.MemberRepository;
 
@@ -23,15 +22,16 @@ public class MemberService {
         if (member == null || member.getName() == null || member.getName().isBlank()) {
             throw new MemberSaveExseption("Имя участника не может быть пустым");
         }
-        return repository.save(Optional.of(member));
+        return repository.save(member);
     }
 
-
+    public Optional<Member> save(String name) {
+        return save(new Member(name));
+    }
 
     public Member getById(Long id) {
-        return repository.findById(id).orElseThrow(() -> new MemberNotFoundExseption(id));
-
-
+        return repository.findById(id)
+                .orElseThrow(() -> new MemberNotFoundExseption("Member id=" + id + " не найден"));
     }
 
     public List<Member> getAll() {
@@ -42,26 +42,26 @@ public class MemberService {
         repository.deleteById(id);
     }
 
-    public Optional<Member> getByName(String name) {
-        return repository.findByName(name);
-
+    public Member getByName(String name) {
+        return repository.findByName(name)
+                .orElseThrow(() -> new MemberNotFoundExseption("Member name=" + name + " не найден"));
     }
 
     public Optional<Member> update(Long id, String newName) {
-        Optional<Member> m = Optional.ofNullable(getById(id));
-        m.stream();
+        Member m = getById(id);
+        m.setName(newName);
         return repository.save(m);
     }
 
     public Optional<Member> deactivate(Long id) {
-        Optional<Member> m = Optional.ofNullable(getById(id));
-        m.getClass();
+        Member m = getById(id);
+        m.setActive(false);
         return repository.save(m);
     }
 
     public Optional<Member> activate(Long id) {
-        Optional<Member> m = Optional.ofNullable(getById(id));
-        m.getClass();
+        Member m = getById(id);
+        m.setActive(true);
         return repository.save(m);
     }
 }
